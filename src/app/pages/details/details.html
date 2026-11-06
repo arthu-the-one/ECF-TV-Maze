@@ -1,0 +1,58 @@
+<main>
+    @if (loading()) {
+    <p>Chargement de la fiche série...</p>
+    }
+    @else if (errorMessage()) {
+    <p>{{ errorMessage() }}</p>
+    }
+    @else if (show(); as serie) {
+        <article class="details">
+            <a routerLink="/tv-maze/home">← Retour aux séries</a>
+
+            @if (serie.image) {
+                <img [src]="serie.image.original" [alt]="'Affiche de ' + serie.name" />
+            }
+            <section>
+                <h1>{{ serie.name }}</h1>
+
+                <p>Statut : {{ serie.status }}</p>
+                <p>Note : {{ serie.rating.average ?? 'Non notée' }}</p>
+                <p>Genres :
+                    @for (genre of serie.genres; track genre) {
+                        <span>{{ genre }}</span>
+                    }
+                </p>
+            </section>
+
+            <section>
+                <h2>Synopsis</h2>
+
+                @if (serie.summary) {
+                    <div [innerHTML]="serie.summary"></div>
+                } @else {
+                    <p>Aucun synopsis disponible.</p>
+                }
+            </section>
+
+            <section>
+                <h2>Épisodes</h2>
+                
+                @if (serie._embedded?.episodes; as episodes) {
+                    @for (episode of episodes; track episode.id) {
+                        <article>
+                            <h3>
+                                Saison {{ episode.season }}
+                                — Épisode {{ episode.number ?? '?' }}
+                            </h3>
+
+                            <p>{{ episode.name }}</p>
+                            <p>Date de diffusion : {{ episode.airdate || 'Inconnue' }}</p>
+                        </article>
+                    } @empty {
+                        <p>Aucun épisode disponible.</p>
+                    }
+                }
+            </section>
+        </article>
+    }
+</main>

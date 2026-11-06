@@ -1,0 +1,11 @@
+<main>
+    <h1>Mes favoris ❤️</h1>
+
+    <section class="favorites-list">
+        @for (show of favoritesService.favorites(); track show.id) {
+            <app-card [show]="show" />
+        } @empty {
+            <p>Tu n'as pas encore ajouté de séries à tes favoris.</p>
+        }
+    </section>
+</main>

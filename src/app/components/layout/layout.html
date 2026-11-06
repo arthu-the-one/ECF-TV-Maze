@@ -1,0 +1,23 @@
+<header>
+    <h1>📺 TV Maze Explorer</h1>
+
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="/tv-maze/home" routerLinkActive="active">Accueil</a>
+            </li>
+            <li>
+                <a routerLink="/tv-maze/favorites" routerLinkActive="active">⭐ Favoris</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div>
+        <label for="adultAccess">Mode Adulte / Accès Fiches :</label>
+        <input type="checkbox" id="adultAccess" [checked]="accessService.adultAccess()" (change)="accessService.toggleAdultAccess()"/>
+        <span>{{ accessService.adultAccess() ? 'Activé' : 'Désactivé' }}</span>
+    </div>
+</header>
+
+<router-outlet/>
+
